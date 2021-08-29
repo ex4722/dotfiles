@@ -44,6 +44,7 @@ set linebreak
 set scrolloff=7
 set sidescrolloff=10
 set wrap !
+
 " UI options
 set guicursor=
 set visualbell
@@ -59,6 +60,7 @@ set nobackup
 set undodir=/home/ex4722/.config/nvim/undodir
 set undofile
 set signcolumn=yes
+
 " Search menu
 set ignorecase 
 set smartcase
@@ -69,3 +71,4 @@ lua require'colorizer'.setup()
 
 let g:codi#width = 100
 let g:codi#width = winwidth(winnr()) / 2
+
