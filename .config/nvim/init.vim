@@ -18,7 +18,7 @@ source ~/.config/nvim/after/markdown_composer/paste.vim
 " LSP STUFF
 luafile ~/.config/nvim/lua/lsp/compe-config.lua
 
-" luafile ~/.config/nvim/lua/lsp/lspkind.rc.lua
+luafile ~/.config/nvim/lua/lsp/lspkind.rc.lua
 
 luafile ~/.config/nvim/after/lsp/require.lua
 source ~/.config/nvim/after/lsp/lsp-bind.vim
