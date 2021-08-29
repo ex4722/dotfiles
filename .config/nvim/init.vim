@@ -26,6 +26,7 @@ source ~/.config/nvim/after/lsp/lspsage.vim
 source ~/.config/nvim/after/lsp/lsp-config.vim
 
 "Remove esc and map jk to be normal mode  
+
 imap jk <Esc> " Make vim show numbers
 set number
 set relativenumber
