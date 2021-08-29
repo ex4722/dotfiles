@@ -1,5 +1,5 @@
 set termguicolors
-
+"Heres a comment
 " Sourcing other files
 source ~/.config/nvim/after/markdown_composer/markdown.vim
 source ~/.config/nvim/color/theme.vim
