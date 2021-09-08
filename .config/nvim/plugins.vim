@@ -47,5 +47,5 @@ Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'turbio/bracey.vim'
 Plug 'eslint/eslint'
-
+Plug 'aben20807/vim-runner'
 call plug#end()

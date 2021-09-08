@@ -18,15 +18,16 @@ source ~/.config/nvim/after/markdown_composer/paste.vim
 " LSP STUFF
 luafile ~/.config/nvim/lua/lsp/compe-config.lua
 
-luafile ~/.config/nvim/lua/lsp/lspkind.rc.lua
+" luafile ~/.config/nvim/lua/lsp/lspkind.rc.lua
 
 luafile ~/.config/nvim/after/lsp/require.lua
 source ~/.config/nvim/after/lsp/lsp-bind.vim
 source ~/.config/nvim/after/lsp/lspsage.vim 
 source ~/.config/nvim/after/lsp/lsp-config.vim
 
-"Remove esc and map jk to be normal mode  
+source ~/.config/nvim/after/runner/maps.vim
 
+"Remove esc and map jk to be normal mode  
 imap jk <Esc> " Make vim show numbers
 set number
 set relativenumber
@@ -45,7 +46,6 @@ set linebreak
 set scrolloff=7
 set sidescrolloff=10
 set wrap !
-
 " UI options
 set guicursor=
 set visualbell
@@ -61,7 +61,6 @@ set nobackup
 set undodir=/home/ex4722/.config/nvim/undodir
 set undofile
 set signcolumn=yes
-
 " Search menu
 set ignorecase 
 set smartcase
@@ -72,4 +71,3 @@ lua require'colorizer'.setup()
 
 let g:codi#width = 100
 let g:codi#width = winwidth(winnr()) / 2
-
