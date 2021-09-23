@@ -1,0 +1,7 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=Obsidian
+Exec="/opt/Obsidian-0.12.15.AppImage" %U
+Icon=/home/ex4722/Downloads/obsidan.ico
+Categories=Application;

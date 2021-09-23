@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=9.1
+Name=Ghidra
+Comment=The Ghidra Software Reverse Engineering (SRE) Suite
+Path=/opt/ghidra_10.0.3_PUBLIC
+Exec=/opt/ghidra_10.0.3_PUBLIC/ghidraRun
+Icon=/opt/ghidra_10.0.3_PUBLIC/support/ghidra.ico
+Terminal=false
