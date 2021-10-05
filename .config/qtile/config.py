@@ -43,21 +43,22 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(),
-        desc="Move window focus to other window"),
+    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+
+    Key([mod], "p", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
-        desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
-        desc="Move window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
-        desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+    # Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
+    #     desc="Move window to the left"),
+    # Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
+    #     desc="Move window to the right"),
+    # Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
+    #     desc="Move window down"),
+    # Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
 
     # Grow windows. If current window is on the edge of screen and direction
-    # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(),
         desc="Grow window to the left"),
     Key([mod, "control"], "l", lazy.layout.grow_right(),
@@ -67,39 +68,67 @@ keys = [
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
 
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack"),
+    Key([mod], "n",
+        lazy.layout.normalize(),
+        desc='normalize window size ratios'
+        ),
+    Key([mod], "m",
+        lazy.layout.maximize(),
+        desc='toggle window between minimum and maximum sizes'
+        ),
+    Key([mod, "shift"], "f",
+        lazy.window.toggle_floating(),
+        desc='toggle floating'
+        ),
+    Key([mod], "f",
+        lazy.window.toggle_fullscreen(),
+        desc='toggle fullscreen'
+        ),
+    # Tree tabs stuff 
+    Key([mod, "shift"], "h",
+    lazy.layout.move_left(),
+    desc='Move up a section in treetab'
+    ),
+    Key([mod, "shift"], "l",
+    lazy.layout.move_right(),
+    desc='Move down a section in treetab'
+    ),
+
+    # Monitor support 
+    Key([mod], "w",
+    lazy.to_screen(0),
+    desc='Keyboard focus to monitor 1'
+    ),
+    Key([mod], "e",
+    lazy.to_screen(1),
+    desc='Keyboard focus to monitor 2'
+    ),
+
+    # Launchers 
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
-    Key([mod, "shift"], "p", lazy.shutdown(), desc="Shutdown"),
+    Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
+
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
 
-    Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
-    Key([mod], "d", lazy.spawncmd(),
-        desc="Spawn a command using a prompt widget"),
-    Key([mod], "r", lazy.spawn("rofi -show drun -show-icons")),
+    Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "r", lazy.spawn('rofi -show drun -show-icons '), desc="Run rofi"),
     Key([mod], "i", lazy.spawn("rofi -show window")),
+
 ]
 
 
-
-group_names = [
-        ("",{'layout':'max'} ) ,
-        ("",{'layout':'columns'}) ,
-        ("",{'layout':'columns'}) ,
-        ("",{'layout':'columns'}) ,
-        ("",{'layout':'max'}) ,
-        ("",{'layout':'columns'}) ,
-        ("ﭮ",{'layout':'max'}),
-        ("",{'layout':'columns'}),
-        ("",{'layout':'columns'})
-    ]
+groups = [Group(i) for i in "1234567890"]
+group_names = [("", {'layout': 'monadtall' }),
+               ("", {'layout': 'monadtall'}),
+               ("", {'layout': 'monadtall'}),
+               ("", {'layout': 'monadtall'}),
+               ("", {'layout': 'monadtall'}),
+               ("ﭮ", {'layout': 'monadtall'}),
+               ("", {'layout': 'monadtall'}),
+               ("", {'layout': 'monadtall'}),
+               ("", {'layout': 'floating'})]
 
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
@@ -109,32 +138,56 @@ for i, (name, kwargs) in enumerate(group_names, 1):
     keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
 
 
+# for i in groups:
+#     keys.extend([
+#         # mod1 + letter of group = switch to group
+#         Key([mod], i.name, lazy.group[i.name].toscreen(),
+#             desc="Switch to group {}".format(i.name)),
+
+#         # mod1 + shift + letter of group = switch to & move focused window to group
+#         Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
+#             desc="Switch to & move focused window to group {}".format(i.name)),
+#         # Or, use below if you prefer not to switch to that group.
+#         # # mod1 + shift + letter of group = move focused window to group
+#         # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+#         #     desc="move focused window to group {}".format(i.name)),
+#     ])
 
 layout_theme = {"border_width": 3,
-                "margin": 5,
+                "margin": 8,
                 "border_focus": "#268bd2",
-                "border_normal": "#000000"
+                "border_normal": "#002b36"
                 }
 
 
 layouts = [
     layout.Columns(**layout_theme),
     layout.Max(),
-    # Try more layouts by unleashing below layouts.
-    layout.Stack(num_stacks=2),
-    # layout.Bsp(**layout_theme),
-    # layout.Matrix(**layout_theme),
-    # layout.MonadTall(**layout_theme),
-    # layout.MonadWide(**layout_theme),
-    # layout.RatioTile(**layout_theme),
-    # layout.Tile(**layout_theme),
-    layout.TreeTab(**layout_theme),
-    # layout.VerticalTile(**layout_theme),
-    # layout.Zoomy(),
+    layout.MonadTall(**layout_theme),
+    layout.TreeTab(
+        font = "Hack Nerd Font",
+         fontsize = 10,
+         sections = ["FIRST", "SECOND", "THIRD", "FOURTH"],
+         section_fontsize = 10,
+         border_width = 2,
+         bg_color = "#002b36",
+         active_bg = "#268bd2",
+         active_fg = "000000",
+         inactive_bg = "#2aa198",
+         inactive_fg = "1c1f24",
+         padding_left = 0,
+         padding_x = 0,
+         padding_y = 5,
+         section_top = 10,
+         section_bottom = 20,
+         level_shift = 8,
+         vspace = 3,
+         panel_width = 200
+       ),
 ]
 
 widget_defaults = dict(
-    font = "Hack Nerd Font Mono",
+    font='Hack',
     fontsize=12,
     padding=3,
 )
@@ -153,10 +206,8 @@ colors = [["#002b36", "#002b36"], # panel background
 
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
-screens = [
-    Screen(
-        bottom=bar.Bar(
-            [
+def init_widgets_list():
+    widgets_list = [
                 widget.Sep(
                     linewidth = 0,
                     padding = 6,
@@ -178,7 +229,6 @@ screens = [
                     highlight_color = colors[1],
                     highlight_method = "block",
                     this_current_screen_border = colors[6],
-                    #this_screen_border = colors [4],
                     this_screen_border = "#d33682" ,
                     other_current_screen_border = colors[6],
                     other_screen_border = colors[4],
@@ -301,11 +351,30 @@ screens = [
                     font = "Hack Nerd Font Mono"
                     ),
 
-            ],
-            24,
-        ),
-    ),
-]
+                ]
+    return widgets_list
+
+
+
+
+
+def init_widgets_screen1():
+    widgets_screen1 = init_widgets_list()
+    return widgets_screen1
+
+def init_widgets_screen2():
+    widgets_screen2 = init_widgets_list()
+    return widgets_screen2                 # Monitor 2 will display all widgets in widgets_list
+
+def init_screens():
+    return [Screen(bottom=bar.Bar(widgets=init_widgets_screen1(), opacity=1.0, size=20)),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), opacity=1.0, size=20))]
+
+if __name__ in ["config", "__main__"]:
+    screens = init_screens()
+    widgets_list = init_widgets_list()
+    widgets_screen1 = init_widgets_screen1()
+    widgets_screen2 = init_widgets_screen2()
 
 
 # Drag floating layouts.
@@ -354,6 +423,7 @@ wmname = "LG3D"
 def start_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
+    os.system("touch ~/foobar")
 
 
 
