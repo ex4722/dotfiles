@@ -63,5 +63,9 @@ set incsearch
 " tabs stuf 
 nnoremap B :set nomore <Bar> :ls <Bar> :set more <CR>:b<Space>
 
-
 lua require'colorizer'.setup()
+
+" autocmd BufWritePre *.py Neoformat
+" packloadall
+
+" lua   require'lspconfig'.jdtls.setup{ cmd = { 'jdtls' } }
