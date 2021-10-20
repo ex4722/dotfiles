@@ -8,6 +8,7 @@ saga.init_lsp_saga {
   infor_sign = '',
   border_style = "round",
 }
+
 EOF
 
 " nnoremap <silent> <C-j> :Lspsaga diagnostic_jump_next<CR>
@@ -15,6 +16,6 @@ EOF
 nnoremap <silent> <C-k> <Cmd>Lspsaga signature_help<CR>
 nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 nnoremap <silent> gh <Cmd>Lspsaga lsp_finder<CR>
-nnoremap <silent> gh <Cmd>Lspsaga lsp_finder<CR>
 nnoremap <silent> gr <cmd>lua require('lspsaga.rename').rename()<CR>
+nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
 nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
