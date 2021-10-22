@@ -12,6 +12,7 @@ source ~/.config/nvim/after/tabline/tabline.vim
 " source ~/.config/nvim/after/telly/telly.vim
 source ~/.config/nvim/after/telly/bind.vim
 source ~/.config/nvim/after/emmet/emmet.vim
+source ~/.config/nvim/after/fugative/git.vim
 luafile ~/.config/nvim/after/telly/tela.lua
 
 source ~/.config/nvim/after/tree/treesitter.vim

@@ -34,6 +34,7 @@ Plug 'mfussenegger/nvim-jdtls'
 "Code Runners 
 
 Plug 'jalvesaq/vimcmdline'
+Plug 'vimwiki/vimwiki'
 
 "Code Formatters
 Plug 'Yggdroot/indentLine'
