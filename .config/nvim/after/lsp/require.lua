@@ -4,6 +4,12 @@ require'lspconfig'.html.setup{}
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.vimls.setup{}
 
+require'lspconfig'.zeta_note.setup{
+    filetypes = { "markdown" },
+    cmd = {'/usr/bin/zeta-note'}
+}
+
+
 -- require'lspinstall'.setup() -- important
 
 -- local servers = require'lspinstall'.installed_servers()

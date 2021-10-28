@@ -11,6 +11,7 @@ Plug 'nvim-treesitter/playground'
 Plug 'tree-sitter/tree-sitter-html' 
 
 
+Plug 'junegunn/goyo.vim'
 
 Plug 'hoob3rt/lualine.nvim'
 
