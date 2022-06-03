@@ -1,0 +1,1 @@
+pacmd set-default-sink alsa_output.usb-Plantronics_Plantronics_Blackwire_5220_Series_46CA081846874D4B8B5FED55D03B96F4-00.analog-stereo 
