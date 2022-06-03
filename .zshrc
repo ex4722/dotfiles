@@ -4,6 +4,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/ex4722/.oh-my-zsh"
 export SUDO_EDITOR=`which v`
+export JDTLS_HOME=/opt/jdt/  # Directory with the plugin and configs directories
+export DENO_INSTALL="/home/ex4722/.deno"
+
 ZSH_THEME="agnoster"
 
 DEFAULT_USER=ex4722
@@ -34,18 +37,29 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # HIST_STAMPS="mm/dd/yyyy"
 
-plugins=(enhancd git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(enhancd git zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search colored-man-pages)
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 sh /opt/solarized8.sh
-export PATH=$PATH:/home/ex4722/.local/bin:/home/ex4722/go/bin:/opt/jdk-17/bin:/home/ex4722/.cargo/bin:/opt/ghidra_10.0.3_PUBLIC/:/home/ex4722/.local/share/gem/ruby/3.0.0/bin
-export LC_ALL=en_US.UTF-8
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
-# export MANPATH="/usr/local/man:$MANPATH"
+export PATH=$PATH:/home/ex4722/.local/bin:/home/ex4722/go/bin:/opt/jdk-17/bin:/home/ex4722/.cargo/bin:/opt/ghidra_10.0.3_PUBLIC/:/home/ex4722/.local/share/gem/ruby/3.0.0/bin:/opt/depot_tools
+export PATH="/home/ex4722/.local/share/solana/install/active_release/bin:$PATH"
+export PATH="/home/ex4722/.local/share/gem/ruby/3.0.0/bin/:$PATH"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+
+export PATH="$DENO_INSTALL/bin:$PATH"
+export LC_ALL=en_US.UTF-8
+
+# export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
+
+
+export RUST_LOG=solana_runtime::system_instruction_processor=trace,solana_runtime::message_processor=info,solana_bpf_loader=debug,solana_rbpf=debug
+
+bindkey '^k' history-substring-search-up
+bindkey '^j' history-substring-search-down
+
+
+# export MANPATH="/usr/local/man:$MANPATH"
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -69,8 +83,51 @@ alias tmux="tmux -u"
 alias cd-="cd -"
 alias cd..="cd .."
 alias die="exit"
+alias cat="bat"
+alias ls="exa"
 
 alias ga="git add ."
 alias gc="git commit -m"
 alias gp="git push"
 alias clip="xclip -selection c"
+alias pwnstart="docker "
+alias pi="pwninit --template-path /opt/exploit.py"
+alias check='checksec'
+
+
+alias p='ipython'
+alias t='tmux'
+alias g='gdb'
+alias c='clear'
+alias S='sudoedit'
+
+
+
+alias luamake=/home/ex4722/.config/nvim/lua-language-server/3rd/luamake/luamake
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/ex4722/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/ex4722/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/ex4722/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/ex4722/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+export KCTF_BIN=~/Downloads/kctf/bin
+
+
+bindkey -v
+bindkey '^K' history-substring-search-up
+bindkey '^J' history-substring-search-down
+bindkey '^F' autosuggest-accept
+
+bindkey '^[.' insert-last-word
+
+
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+eval "$(zoxide init zsh)"
+eval "$(thefuck --alias)"
+
+ZSH_HIGHLIGHT_STYLES[comment]=fg=60
+
+# opam configuration
+[[ ! -r /home/ex4722/.opam/opam-init/init.zsh ]] || source /home/ex4722/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
