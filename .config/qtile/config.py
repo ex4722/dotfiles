@@ -98,7 +98,7 @@ keys = [
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
 
     Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "r", lazy.spawn('rofi -show drun -show-icons '), desc="Run rofi"),
+    Key([mod], "r", lazy.spawn('/home/ex4722/.config/rofi/launchers/text/launcher.sh'), desc="Run rofi"),
     Key([mod], "i", lazy.spawn("rofi -show window")),
 
     # Screenshotter 
@@ -108,7 +108,8 @@ keys = [
 
 
 groups = [Group(i) for i in "1234567890"]
-group_names = [("", {'layout': 'monadtall' }),
+group_names = [
+    ("", {'layout': 'monadtall' }),
     ("", {'layout': 'monadtall'}),
     ("", {'layout': 'monadtall'}),
     ("", {'layout': 'monadtall'}),
@@ -116,7 +117,8 @@ group_names = [("", {'layout': 'monadtall' }),
     ("ﭮ", {'layout': 'monadtall'}),
     ("", {'layout': 'monadtall'}),
     ("", {'layout': 'monadtall'}),
-    ("", {'layout': 'floating'})]
+    ("", {'layout': 'floating'}),
+    ]
 
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
@@ -147,13 +149,13 @@ layout_theme = {"border_width": 3,
     "border_normal": "#002b36"
 }
 
-
+font = "Hack Nerd Font Mono"
 layouts = [
     layout.Columns(**layout_theme),
     layout.Max(),
     layout.MonadTall(**layout_theme),
     layout.TreeTab(
-        font = "Hack Nerd Font",
+        font = font,
         fontsize = 10,
         sections = ["FIRST", "SECOND", "THIRD", "FOURTH"],
         section_fontsize = 10,
@@ -175,7 +177,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font='Hack',
+    font=font,
     fontsize=15,
     padding=3,
 )
@@ -203,13 +205,13 @@ def init_widgets_list():
             background = colors[0]
         ),
         widget.GroupBox(
-            # font = "Ubuntu Bold",
-            font = "Hack Nerd Font Mono",
-            fontsize = 35,
+            font = font,
+            fontsize = 40,
             margin_y = 3,
             margin_x = 0,
-            padding_y = 5,
+            padding_y = 9,
             padding_x = 3,
+
             borderwidth = 3,
             active =  "#fdf6e3" ,
             inactive = "#657b83" ,
@@ -225,7 +227,7 @@ def init_widgets_list():
         ),
         widget.Prompt(
             prompt = prompt,
-            font = "Hack Bold",
+            font = font,
             padding = 10,
             foreground = colors[3],
             background = colors[0]
@@ -243,7 +245,7 @@ def init_widgets_list():
             background = colors[0],
             fontsize = 16,
             padding = 0,
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
 
 
@@ -257,7 +259,7 @@ def init_widgets_list():
             foreground = colors[4],
             padding = 0,
             fontsize = 37,
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
         widget.TextBox(
             text = "",
@@ -265,7 +267,7 @@ def init_widgets_list():
             background = colors[4],
             padding = 0,
             fontsize = 14,
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
 
         widget.Memory(
@@ -282,21 +284,22 @@ def init_widgets_list():
             foreground = colors[5],
             padding = 0,
             fontsize = 37,
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
         widget.TextBox(
             text = " Vol:",
             foreground = colors[2],
             background = colors[5],
             padding = 0,
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
 
         widget.Volume(
             foreground = colors[2],
             background = colors[5],
             padding = 10,
-            font = "Hack Nerd Font Mono"
+            font = font,
+            channel = "Headset"
         ),
 
         widget.TextBox(
@@ -305,7 +308,7 @@ def init_widgets_list():
             foreground = colors[4],
             padding = 0,
             fontsize = 37,
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
         widget.CurrentLayoutIcon(
             custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
@@ -313,7 +316,7 @@ def init_widgets_list():
             background = colors[4],
             padding = 0,
             scale = 0.7,
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
 
         widget.CurrentLayout(
@@ -329,14 +332,14 @@ def init_widgets_list():
             foreground = colors[5],
             padding = 0,
             fontsize = 37,
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
 
         widget.Clock(
             foreground = colors[2],
             background = colors[5],
             format = "%A, %B %d - %I:%M %p ",
-            font = "Hack Nerd Font Mono"
+            font = font 
         ),
 
     ]
