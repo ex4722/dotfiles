@@ -1,28 +1,3 @@
-# Copyright (c) 2010 Aldo Cortesi
-# Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
-# Copyright (c) 2012 Craig Barnes
-# Copyright (c) 2013 horsik
-# Copyright (c) 2013 Tao Sauvage
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
 import os
 import re
 import socket
@@ -36,6 +11,8 @@ from libqtile.utils import guess_terminal
 
 mod = "mod4"
 terminal = 'alacritty'
+browser = '/opt/waterfox/waterfox'
+binja = '/opt/binaryninja/binaryninja'
 
 keys = [
     # Switch between windows
@@ -91,6 +68,8 @@ keys = [
 
     # Launchers 
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "g", lazy.spawn(browser), desc="Launch browser"),
+    Key([mod], "e", lazy.spawn("/usr/local/bin/emacsclient -c -a 'emacs'"), desc="Emacs"),
 
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
 
@@ -98,26 +77,31 @@ keys = [
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
 
     Key([mod], "d", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "r", lazy.spawn('/home/ex4722/.config/rofi/launchers/text/launcher.sh'), desc="Run rofi"),
-    Key([mod], "i", lazy.spawn("rofi -show window")),
+    Key([mod], "r", lazy.spawn('/home/ex/.config/rofi/launchers/text/launcher.sh'), desc="Run rofi"),
+    Key([mod], "i", lazy.spawn("/home/ex/.config/rofi/launchers/text/window.sh")),
 
     # Screenshotter 
     Key([], "Print", lazy.spawn("flameshot gui")),
+
+    # Volumes 
+    Key([], "XF86AudioMute", lazy.spawn("amixer -q -c 2 set Headset toggle")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 2 sset Headset 1+ unmute")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 2 sset Headset 1- unmute")),
 
 ]
 
 
 groups = [Group(i) for i in "1234567890"]
 group_names = [
-    ("", {'layout': 'monadtall' }),
-    ("", {'layout': 'monadtall'}),
-    ("", {'layout': 'monadtall'}),
-    ("", {'layout': 'monadtall'}),
-    ("", {'layout': 'monadtall'}),
-    ("ﭮ", {'layout': 'monadtall'}),
-    ("", {'layout': 'monadtall'}),
-    ("", {'layout': 'monadtall'}),
-    ("", {'layout': 'floating'}),
+        ("", {'layout': 'monadtall','spawn':browser}),
+        ("", {'layout': 'monadtall', 'spawn':'alacritty'}),
+        ("", {'layout': 'monadtall'}),
+        ("", {'layout': 'monadtall'}),
+        ("", {'layout': 'monadtall'}),
+        ("ﭮ", {'layout': 'monadtall','spawn':'discord'}),
+        ("", {'layout': 'monadtall'}),
+        ("", {'layout': 'monadtall'}),
+        ("", {'layout': 'floating','spawn':binja}),
     ]
 
 
@@ -256,7 +240,7 @@ def init_widgets_list():
         widget.TextBox(
             text = '',
             background = colors[0],
-            foreground = colors[4],
+            foreground = colors[5],
             padding = 0,
             fontsize = 37,
             font = font 
@@ -264,7 +248,7 @@ def init_widgets_list():
         widget.TextBox(
             text = "",
             foreground = colors[2],
-            background = colors[4],
+            background = colors[5],
             padding = 0,
             fontsize = 14,
             font = font 
@@ -272,9 +256,37 @@ def init_widgets_list():
 
         widget.Memory(
             foreground = colors[2],
-            background = colors[4],
+            background = colors[5],
             mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
             padding = 5
+        ),
+
+
+        widget.TextBox(
+            text = '',
+            background = colors[5],
+            foreground = colors[4],
+            padding = 0,
+            fontsize = 37,
+            font = font 
+        ),
+
+
+        widget.TextBox(
+            text = " AP:",
+            foreground = colors[2],
+            background = colors[4],
+            padding = 0,
+            font = font 
+        ),
+
+        widget.PulseVolume(
+            foreground = colors[2],
+            background = colors[4],
+            padding = 10,
+            font = font,
+            cardid= 2,
+            channel = "Headset",
         ),
 
 
@@ -286,6 +298,8 @@ def init_widgets_list():
             fontsize = 37,
             font = font 
         ),
+
+
         widget.TextBox(
             text = " Vol:",
             foreground = colors[2],
@@ -294,13 +308,27 @@ def init_widgets_list():
             font = font 
         ),
 
-        widget.Volume(
+
+        # widget.Volume(
+        #     foreground = colors[2],
+        #     background = colors[5],
+        #     padding = 10,
+        #     font = font,
+        #     cardid= 2,
+        #     device='Headset',
+        #     channel="Plantronics Blackwire 5220 Series",
+        # ),
+
+        widget.PulseVolume(
             foreground = colors[2],
             background = colors[5],
             padding = 10,
             font = font,
-            channel = "Headset"
+            cardid= 2,
+            channel = "Headset",
+            device = "Plantronics Blackwire 5220 Series"
         ),
+
 
         widget.TextBox(
             text = '',
@@ -310,6 +338,8 @@ def init_widgets_list():
             fontsize = 37,
             font = font 
         ),
+
+
         widget.CurrentLayoutIcon(
             custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
             foreground = colors[0],
@@ -354,12 +384,63 @@ def init_widgets_screen1():
     return widgets_screen1
 
 def init_widgets_screen2():
-    widgets_screen2 = init_widgets_list()
+    widgets_screen2 = [
+        widget.Sep(
+            linewidth = 0,
+            padding = 6,
+            foreground = colors[2],
+            background = colors[0]
+        ),
+        widget.GroupBox(
+            font = font,
+            fontsize = 40,
+            margin_y = 3,
+            margin_x = 0,
+            padding_y = 9,
+            padding_x = 3,
+
+            borderwidth = 3,
+            active =  "#fdf6e3" ,
+            inactive = "#657b83" ,
+            rounded = False,
+            highlight_color = colors[1],
+            highlight_method = "block",
+            this_current_screen_border = colors[6],
+            this_screen_border = "#d33682" ,
+            other_current_screen_border = colors[6],
+            other_screen_border = colors[4],
+            foreground = colors[2],
+            background = colors[0]
+        ),
+        widget.Prompt(
+            prompt = prompt,
+            font = font,
+            padding = 10,
+            foreground = colors[3],
+            background = colors[0]
+        ),
+
+        widget.Sep(
+            linewidth = 0,
+            padding = 6,
+            foreground = colors[2],
+            background = colors[0]
+        ),
+
+        widget.WindowName(
+            foreground = colors[6],
+            background = colors[0],
+            fontsize = 16,
+            padding = 0,
+            font = font 
+        ),
+    ]
+
     return widgets_screen2                 # Monitor 2 will display all widgets in widgets_list
 
 def init_screens():
     return [Screen(bottom=bar.Bar(widgets=init_widgets_screen1() , opacity=1.0, size=30)),
-        Screen(top=bar.Bar(widgets=init_widgets_screen2(), opacity=1.0, size=20))]
+        Screen(bottom=bar.Bar(widgets=init_widgets_screen2(), opacity=1.0, size=30))]
 
 if __name__ in ["config", "__main__"]:
     screens = init_screens()
