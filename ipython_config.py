@@ -47,18 +47,21 @@ if getattr(ip, 'pt_app', None):
 
 
 c.TerminalInteractiveShell.editing_mode = "vi"
-# c.TerminalInteractiveShell.prompt_includes_vi_mode = True 
 c.TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode = False
 c.TerminalInteractiveShell.timeoutlen = 0.25
 c.TerminalInteractiveShell.highlighting_style = 'solarized-dark'
 
 
-# keybindings = IPython.get_ipython().pt_app.key_bindings
 
-# vi_navigation_mode_keybinding = partial(keybindings.add, filter=HasFocus(DEFAULT_BUFFER) & ViNavigationMode())
-# vi_insert_mode_keybinding = partial(keybindings.add, filter=HasFocus(DEFAULT_BUFFER) & ViInsertMode())
 
-# @vi_insert_mode_keybinding("k", "k")
-# def switch_to_navigation_mode(event):
-#     event.cli.vi_state.input_mode = InputMode.NAVIGATION
+# def junk():
+#     c.TerminalInteractiveShell.prompt_includes_vi_mode = True 
+#     keybindings = IPython.get_ipython().pt_app.key_bindings
+
+#     vi_navigation_mode_keybinding = partial(keybindings.add, filter=HasFocus(DEFAULT_BUFFER) & ViNavigationMode())
+#     vi_insert_mode_keybinding = partial(keybindings.add, filter=HasFocus(DEFAULT_BUFFER) & ViInsertMode())
+
+#     @vi_insert_mode_keybinding("k", "k")
+#     def switch_to_navigation_mode(event):
+#         event.cli.vi_state.input_mode = InputMode.NAVIGATION
 
